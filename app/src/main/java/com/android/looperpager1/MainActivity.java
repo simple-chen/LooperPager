@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         mData.add(R.mipmap.pic2);
         mData.add(R.mipmap.pic3);
         mPagerAdapter.notifyDataSetChanged();
+        mViewPager.setCurrentItem(Integer.MAX_VALUE/2+1);//设置当前位置，可以左右滑动，并且第0张图片显示在第0个位置
     }
 
     private void initView() {
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return mData.size();
+            return Integer.MAX_VALUE;
         }
 
         @Override
@@ -58,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             View item = LayoutInflater.from(MainActivity.this).inflate(R.layout.pager_item, container, false);
             ImageView image = item.findViewById(R.id.image);
-            image.setImageResource(mData.get(position));
+            int realPosition = position % mData.size();
+            image.setImageResource(mData.get(realPosition));
             if (image.getParent() instanceof ViewGroup) {
                 ((ViewGroup) image.getParent()).removeView(image);
             }
